@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=harbour-muoviroma
+Exec=sailfish-qml harbour-muoviroma
+Name=muoviroma
+Name[it_IT]=muoviroma
+
+[X-Sailjail]
+OrganizationName=org.frapps.muoviroma
+ApplicationName=harbour-muoviroma
+Permissions=Internet;WebView
