@@ -30,50 +30,125 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import Sailfish.WebView 1.0
-import Sailfish.WebView.Popups 1.0
+import "../components"
+import "../components/dockedbar"
 
-Page {
+WebViewPage {
     id: page
-    allowedOrientations: Orientation.All
+    focus: true
+
+    property alias webView: webViewContainer.webView
+    property real webViewBottomMargin: webView.chrome ? dockedbar.height : 0
+
+    Behavior on webViewBottomMargin {
+        NumberAnimation { duration: 220; easing.type: Easing.InOutQuad }
+    }
+
     BookmarkPage {id: bookmarkPage} // just don't. I know it's wrong, but the freaking bug won't die!
 
-    property alias webView: webViewFlickable.webView
+    property bool zoom: false // This is for choosing the pixelratiohack
 
-    readonly property string devicePixelRatioHack: "if (!window.location.origin) window.location.origin = window.location.protocol+'//'+window.location.host;"
-        + "var meta = document.querySelector('meta[name=viewport]');"
-        + "if (!meta) return;"
-        + "if (screen.width <= 540) meta.setAttribute('content', 'width=device-width/1.5, initial-scale='+(1.5));"
-        + "else if (screen.width > 540 && screen.width <= 768) meta.setAttribute('content', 'width=device-width/2.0, initial-scale='+(2.0));"
-        + "else if (screen.width > 768) meta.setAttribute('content', 'width=device-width/3.0, initial-scale='+(3.0));"
-
-    Timer {
-        id: timer
-        interval: 120000
-        repeat: true
-        onTriggered: pageStack.replace('IdlePage.qml')
+    // Sailfish WebView has no flick()/scrollTo*() helpers: scroll the document instead.
+    function scrollBy(amount) {
+        webView.runJavaScript("window.scrollBy(0, " + Math.round(amount) + "); return true;")
     }
 
-    Connections {
-        target: Qt.application
-        onActiveChanged: {
-            if (!Qt.application.active) {
-                timer.restart()
-            } else {
-                timer.stop()
-            }
-        }
+    function scrollToTop() {
+        webView.runJavaScript("window.scrollTo(0, 0); return true;")
     }
 
+    function scrollToBottom() {
+        webView.runJavaScript("window.scrollTo(0, Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)); return true;")
+    }
+
+    // No IdlePage replacement is needed: WebView.active already follows
+    // Qt.application.state and the WebViewPage status, so the page is paused
+    // in place while the app is in the background or another page is shown.
+    // Keeping this page alive preserves scroll position and page state.
+
+    Keys.onPressed: {
+           handleKeyPressed(event);
+       }
+
+       function handleKeyPressed(event) {
+
+           if (event.key === Qt.Key_Down) {
+               scrollBy(-page.height);
+               event.accepted = true;
+           }
+
+           if (event.key === Qt.Key_Up) {
+               scrollBy(page.height);
+               event.accepted = true;
+           }
+
+           if (event.key === Qt.Key_PageDown) {
+               scrollToBottom();
+               event.accepted = true;
+           }
+
+           if (event.key === Qt.Key_PageUp) {
+               scrollToTop();
+               event.accepted = true;
+           }
+
+           if (event.key === Qt.Key_B) {
+               webView.goBack();
+               event.accepted = true;
+           }
+
+           if (event.key === Qt.Key_F) {
+               webView.goForward();
+               event.accepted = true;
+           }
+
+           if (event.key === Qt.Key_H) {
+               webView.url = "https://www.jollacommunity.it";
+               event.accepted = true;
+           }
+
+           if (event.key === Qt.Key_R) {
+               webView.reload();
+               event.accepted = true;
+           }
+   }
+
+    // WebViewFlickable provides the Silica flickable required by PullDownMenu.
     WebViewFlickable {
-        id: webViewFlickable
-        anchors {
-            fill: parent
-            bottomMargin: navPanel.visibleSize
+        id: webViewContainer
+        anchors.fill: parent
+        anchors.bottomMargin: webViewBottomMargin
+
+        Binding {
+            target: webViewContainer.webView
+            property: "url"
+            value: "http://muovi.roma.it/percorso/js/"
+        }
+
+        Binding {
+            target: webViewContainer.webView
+            property: "chromeGestureEnabled"
+            value: true
+        }
+
+        Binding {
+            target: webViewContainer.webView
+            property: "chromeGestureThreshold"
+            value: Theme.paddingLarge
+        }
+
+        WebViewScrollDecorator {
+            webView: webViewContainer.webView
         }
 
         PullDownMenu {
-            MenuLabel {
-                text: qsTr("muoviroma WebView") + " 0.6.0"
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: webView.reload()
+            }
+            MenuItem {
+                text: qsTr("About")
+                onClicked: pageStack.push(Qt.resolvedUrl("./AboutPage.qml"))
             }
             MenuItem {
                 text: qsTr("Web App")
@@ -82,72 +157,30 @@ Page {
                 }
             }
             MenuItem {
-                text: navPanel.open ? qsTr("Hide navigation bar")
-                                : qsTr("Open navigation bar")
-                onClicked: {
-                    navPanel.open ? navPanel.open = false : navPanel.open = true
-                }
-            }
-        }
-
-        webView.url: "http://muovi.roma.it/percorso/js/"
-        webView.popupProvider: PopupProvider {
-            passwordManagerPopup: null
-        }
-        webView.onLoadingChanged: {
-            if (!webView.loading) {
-                webView.runJavaScript(devicePixelRatioHack)
+                text: qsTr("Open in browser")
+                onClicked: Qt.openUrlExternally(webView.url)
             }
         }
     }
 
-    DockedPanel {
-        id: navPanel
-        dock: Dock.Bottom
-        width: parent.width
-        height: navRow.height + Theme.paddingMedium
-        open: true // todo: open and close on scroll
-        _immediate: true // no lag when opening or closing
+    DockedBar
+    {
+        id: dockedbar
+        anchors { left: parent.left; bottom: parent.bottom; right: parent.right }
 
-        Rectangle {
-            anchors.fill: parent
-            color: Theme.rgba(Theme.backgroundColor, 0.88)
-            z: -1
+        property bool shown: webView.chrome
+        property real slideOffset: shown ? 0 : height
+
+        opacity: shown ? 1 : 0
+        visible: opacity > 0
+        transform: Translate { y: dockedbar.slideOffset }
+
+        Behavior on slideOffset {
+            NumberAnimation { duration: 220; easing.type: Easing.InOutQuad }
         }
 
-        Row {
-            id: navRow
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                right: parent.right
-                leftMargin: Theme.paddingLarge
-                rightMargin: Theme.paddingLarge
-            }
-            spacing: Theme.paddingMedium
-            IconButton {
-                icon.source: "image://theme/icon-m-back"
-                onClicked: webView.goBack()
-                enabled: webView.canGoBack
-            }
-            IconButton {
-                icon.source: "image://theme/icon-m-refresh"
-                onClicked: webView.reload()
-            }
-            IconButton {
-                icon.source: "image://theme/icon-m-train"
-                onClicked: webView.url = "https://romamobile.it/percorso/js/?hl=it#htm-0"
-            }
-            IconButton {
-                icon.source: "image://theme/icon-m-favorite"
-                onClicked: pageStack.push(bookmarkPage, {"name": webView.title, "url": webView.url})
-            }
-            IconButton {
-                icon.source: "image://theme/icon-m-forward"
-                onClicked: webView.goForward()
-                enabled: webView.canGoForward
-            }
+        Behavior on opacity {
+            FadeAnimation { duration: 220 }
         }
     }
 }

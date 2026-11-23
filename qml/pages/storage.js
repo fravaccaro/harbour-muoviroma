@@ -32,90 +32,12 @@
 */
 
 
+.import QtQuick.LocalStorage 2.0 as LS
+
 //storage.js
-var LEGACY_DB_CANDIDATES = [
-    { name: "muoviromaDB", version: "1.0", description: "muoviromaDB" },
-    { name: "muoviromaDB", version: "1.0", description: "harbour-muoviroma" }
-]
-
+// First, let's create a short helper function to get the database connection
 function getDatabase() {
-    return LocalStorage.openDatabaseSync("muoviromaDB", "1.0", "muoviromaDB", 100000);
-}
-
-function bookmarkCount(db) {
-    var count = 0
-    db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT COUNT(*) AS count FROM bookmarks')
-        count = rs.rows.item(0).count
-    })
-    return count
-}
-
-function markBookmarksMigrated(db) {
-    db.transaction(function(tx) {
-        tx.executeSql("INSERT OR REPLACE INTO settings VALUES ('bookmarks_migrated', '1')")
-    })
-}
-
-function migrationCompleted(db) {
-    var migrated = false
-    db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT)')
-        var rs = tx.executeSql("SELECT value FROM settings WHERE key='bookmarks_migrated'")
-        if (rs.rows.length > 0 && rs.rows.item(0).value === '1') {
-            migrated = true
-        }
-    })
-    return migrated
-}
-
-function importLegacyBookmarks(db) {
-    var imported = 0
-
-    for (var i = 0; i < LEGACY_DB_CANDIDATES.length; i++) {
-        var candidate = LEGACY_DB_CANDIDATES[i]
-        try {
-            var legacyDb = LocalStorage.openDatabaseSync(
-                candidate.name, candidate.version, candidate.description, 100000)
-            legacyDb.transaction(function(ltx) {
-                var rs = ltx.executeSql('SELECT name, url FROM bookmarks')
-                for (var j = 0; j < rs.rows.length; j++) {
-                    var row = rs.rows.item(j)
-                    db.transaction(function(tx) {
-                        tx.executeSql('INSERT OR IGNORE INTO bookmarks VALUES (?,?)',
-                                        [row.name, row.url])
-                    })
-                    imported++
-                }
-            })
-        } catch (error) {
-            console.log("Legacy bookmark import skipped for", candidate.description, error)
-        }
-    }
-
-    return imported
-}
-
-function migrateLegacyBookmarks() {
-    var db = getDatabase()
-
-    if (migrationCompleted(db)) {
-        return
-    }
-
-    if (bookmarkCount(db) > 0) {
-        markBookmarksMigrated(db)
-        return
-    }
-
-    var imported = importLegacyBookmarks(db)
-    if (imported > 0) {
-        console.log("Imported", imported, "legacy bookmarks")
-    } else {
-        console.log("No legacy bookmarks found to import")
-    }
-
-    markBookmarksMigrated(db)
+    return LS.LocalStorage.openDatabaseSync("jollaitDB", "1.0", "jollaitDB", 100000);
 }
 
 // At the start of the application, we can initialize the tables we need if they haven't been created yet
@@ -123,10 +45,10 @@ function initialize() {
     var db = getDatabase();
     db.transaction(
                 function(tx) {
+                    // Create the settings table if it doesn't already exist
+                    // If the table exists, this is skipped
                     tx.executeSql('CREATE TABLE IF NOT EXISTS bookmarks(name TEXT UNIQUE, url TEXT)');
-                    tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT)');
                 });
-    migrateLegacyBookmarks()
 }
 
 // This function is used to write a bookmark into the database
@@ -178,17 +100,18 @@ function deleteBookmark(name) {
     console.log("Deleted bookmark " + name + " from db.")
     return res;
 }
-// This function is used to retrieve stations from the database
-function getBookmarksFromDB(modelToInsertTo) {
-    //console.log("Inserting favs into list...")
+// Return bookmarks as plain data; the QML view owns its ListModel.
+function getBookmarks() {
     var db = getDatabase();
-    var res="";
+    var bookmarks = [];
     db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT name,url FROM bookmarks;');
+        var rs = tx.executeSql('SELECT name, url FROM bookmarks ORDER BY name COLLATE NOCASE;');
         for (var i = 0; i < rs.rows.length; i++) {
-            modelToInsertTo.insert(i,{"name": rs.rows.item(i).name, "url": rs.rows.item(i).url})
+            bookmarks.push({
+                name: rs.rows.item(i).name,
+                url: rs.rows.item(i).url
+            });
         }
-    })
-    console.log("Bookmarks inserted into list " + modelToInsertTo)
-    return res
+    });
+    return bookmarks;
 }
