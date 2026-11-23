@@ -44,8 +44,6 @@ WebViewPage {
         NumberAnimation { duration: 220; easing.type: Easing.InOutQuad }
     }
 
-    BookmarkPage {id: bookmarkPage} // just don't. I know it's wrong, but the freaking bug won't die!
-
     property bool zoom: false // This is for choosing the pixelratiohack
 
     // Sailfish WebView has no flick()/scrollTo*() helpers: scroll the document instead.
@@ -60,11 +58,6 @@ WebViewPage {
     function scrollToBottom() {
         webView.runJavaScript("window.scrollTo(0, Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)); return true;")
     }
-
-    // No IdlePage replacement is needed: WebView.active already follows
-    // Qt.application.state and the WebViewPage status, so the page is paused
-    // in place while the app is in the background or another page is shown.
-    // Keeping this page alive preserves scroll position and page state.
 
     Keys.onPressed: {
            handleKeyPressed(event);
@@ -122,7 +115,7 @@ WebViewPage {
         Binding {
             target: webViewContainer.webView
             property: "url"
-            value: "http://muovi.roma.it/percorso/js/"
+            value: "https://romamobile.it/webapp"
         }
 
         Binding {
@@ -143,22 +136,22 @@ WebViewPage {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr("Refresh")
-                onClicked: webView.reload()
-            }
-            MenuItem {
                 text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("./AboutPage.qml"))
             }
             MenuItem {
-                text: qsTr("Web App")
+                text: qsTr("Legacy website")
                 onClicked: {
-                    webView.url = "https://romamobile.it/percorso/js/?hl=it#htm-0"
+                    webView.url = "https://romamobile.it/"
                 }
             }
             MenuItem {
                 text: qsTr("Open in browser")
                 onClicked: Qt.openUrlExternally(webView.url)
+            }
+            MenuItem {
+                text: qsTr("Refresh")
+                onClicked: webView.reload()
             }
         }
     }

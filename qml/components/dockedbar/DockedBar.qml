@@ -26,7 +26,7 @@ Item
 
     Row {
         Item {
-            width: dockedbar.width/5
+            width: dockedbar.width/4
             height: Theme.itemSizeLarge
             IconButton {
                 anchors.centerIn: parent
@@ -37,7 +37,7 @@ Item
         }
 
         Item {
-            width: dockedbar.width/5
+            width: dockedbar.width/4
             height: Theme.itemSizeLarge
             IconButton {
                 anchors.centerIn: parent
@@ -48,7 +48,7 @@ Item
         }
 
         Item {
-            width: dockedbar.width/5
+            width: dockedbar.width/4
             height: Theme.itemSizeLarge
             IconButton {
                 anchors.centerIn: parent
@@ -58,7 +58,7 @@ Item
         }
 
         Item {
-            width: dockedbar.width/5
+            width: dockedbar.width/4
             height: Theme.itemSizeLarge
             IconButton {
                 anchors.centerIn: parent
@@ -70,16 +70,5 @@ Item
                 }
             }
         }
-
-        Item {
-            width: dockedbar.width/5
-            height: Theme.itemSizeLarge
-            IconButton {
-                anchors.centerIn: parent
-                icon.source: "image://theme/icon-m-favorite"
-                onClicked: pageStack.push(bookmarkPage,{"name": webView.title, "url": webView.url})
-            }
-        }
-
     }
 }

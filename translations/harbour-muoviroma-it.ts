@@ -50,59 +50,6 @@
     </message>
 </context>
 <context>
-    <name>BookmarkPage</name>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="133"/>
-        <source>Hide search</source>
-        <translation>Nascondi ricerca</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="133"/>
-        <source>Search</source>
-        <translation>Cerca</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="140"/>
-        <source>Add current page</source>
-        <translation>Aggiungi pagina corrente</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="157"/>
-        <source>Bookmarks</source>
-        <translation>Preferiti</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="174"/>
-        <source>Search...</source>
-        <translation>Cerca...</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="184"/>
-        <source>No bookmarks</source>
-        <translation>Nessun preferito</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="185"/>
-        <source>Pull down to add current page to bookmarks</source>
-        <translation>Tira giù per aggiungere la pagina corrente ai preferiti</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="189"/>
-        <source>Nothing was found</source>
-        <translation>Nessun risultato</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="190"/>
-        <source>Try a different search term</source>
-        <translation>Prova con un termine differente</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarkPage.qml" line="236"/>
-        <source>Delete</source>
-        <translation>Elimina</translation>
-    </message>
-</context>
-<context>
     <name>DockedBar</name>
     <message>
         <location filename="../qml/components/dockedbar/DockedBar.qml" line="69"/>
@@ -113,22 +60,17 @@
 <context>
     <name>FirstPage</name>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="146"/>
+        <location filename="../qml/pages/FirstPage.qml" line="154"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="150"/>
+        <location filename="../qml/pages/FirstPage.qml" line="146"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/FirstPage.qml" line="154"/>
-        <source>Web App</source>
-        <translation>Web App</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/FirstPage.qml" line="160"/>
+        <location filename="../qml/pages/FirstPage.qml" line="150"/>
         <source>Open in browser</source>
         <translation type="unfinished"></translation>
     </message>

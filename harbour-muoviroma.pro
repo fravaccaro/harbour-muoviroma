@@ -18,10 +18,6 @@ DISTFILES += \
     qml/harbour-muoviroma.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
-    qml/pages/BookmarkPage.qml \
-    qml/pages/IdlePage.qml \
-    qml/pages/storage.js \
-    qml/pages/devicePixelRatioHack.js \
     rpm/harbour-muoviroma.spec \
     translations/*.ts \
     harbour-muoviroma.desktop

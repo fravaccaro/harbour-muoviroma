@@ -41,49 +41,6 @@
     </message>
 </context>
 <context>
-    <name>BookmarkPage</name>
-    <message>
-        <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No bookmarks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pull down to add current page to bookmarks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nothing was found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Try a different search term</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add current page</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DockedBar</name>
     <message>
         <source>Share link</source>
@@ -92,10 +49,6 @@
 </context>
 <context>
     <name>FirstPage</name>
-    <message>
-        <source>Web App</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
