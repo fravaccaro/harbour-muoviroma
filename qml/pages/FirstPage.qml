@@ -117,10 +117,6 @@ WebViewPage {
             value: Theme.paddingLarge
         }
 
-        WebViewScrollDecorator {
-            webView: webViewContainer.webView
-        }
-
         PullDownMenu {
             MenuItem {
                 text: qsTr("About")

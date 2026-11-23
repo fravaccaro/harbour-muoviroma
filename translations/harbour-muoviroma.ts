@@ -45,13 +45,6 @@
     </message>
 </context>
 <context>
-    <name>CoverPage</name>
-    <message>
-        <source>muoviroma</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DockedBar</name>
     <message>
         <source>Share link</source>

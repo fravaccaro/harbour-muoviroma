@@ -14,7 +14,7 @@ Name:       harbour-muoviroma
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:        romamobile.it WebView
 Version:        0.7.0
-Release:        1
+Release:        2
 Group:          Qt/Qt
 License:        GPLv3
 Source0:        %{name}-%{version}.tar.bz2

@@ -73,12 +73,6 @@ Page {
                 text: qsTr("This app is a lightweight web wrapper providing fast, streamlined access to romamobile.it right from your device, designed for quick, on-the-go checks of Rome's public transit news and updates.")
             }
 
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Sources")
-                onClicked: Qt.openUrlExternally("https://github.com/fravaccaro/harbour-muoviroma")
-            }
-
             LabelText {
                 text: qsTr("Released under the <a href='https://www.gnu.org/licenses/gpl-3.0'>GNU GPLv3</a> license.")
             }
