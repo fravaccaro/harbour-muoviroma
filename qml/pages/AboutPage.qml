@@ -64,21 +64,38 @@ Page
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: Theme.highlightColor
-                text: "Jolla Community Italia"
+                text: "muoviroma"
             }
 
             LabelText {
-                text: qsTr("Access to Jolla Community Italia, read news and discuss on the forum.")
+                text: qsTr("This app is a lightweight web wrapper providing fast, streamlined access to romamobile.it right from your device, designed for quick, on-the-go checks of Rome's public transit news and updates.")
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Sources")
+                onClicked: Qt.openUrlExternally("https://github.com/lallulli/romamobile")
             }
 
             LabelText {
-                text: qsTr("Released under the <a href='https://www.gnu.org/licenses/gpl-3.0'>GNU GPLv3</a> license.")
+                text: qsTr("This is an independent, community-made app and is not officially affiliated with romamobile.it, ATAC, or Roma Servizi per la Mobilità.")
             }
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Sources")
                 onClicked: Qt.openUrlExternally("https://github.com/fravaccaro/harbour-jollait")
+            }
+
+            LabelText {
+                text: qsTr("Released under the <a href='https://www.gnu.org/licenses/gpl-3.0'>GNU GPLv3</a> license.")
+            }
+
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Sources")
+                onClicked: Qt.openUrlExternally("https://github.com/fravaccaro/harbour-muoviroma")
             }
 
               SectionHeader { text: qsTr("Support") }
@@ -90,7 +107,7 @@ Page
               Button {
                   anchors.horizontalCenter: parent.horizontalCenter
                   text: qsTr("Donate")
-                  onClicked: Qt.openUrlExternally("https://www.paypal.me/fravaccaro")
+                  onClicked: Qt.openUrlExternally("https://liberapay.com/fravaccaro")
               }
 
               SectionHeader { text: qsTr("Credits") }

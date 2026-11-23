@@ -8,10 +8,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Access to Jolla Community Italia, read news and discuss on the forum.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Released under the &lt;a href=&apos;https://www.gnu.org/licenses/gpl-3.0&apos;&gt;GNU GPLv3&lt;/a&gt; license.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -39,6 +35,21 @@
         <source>Based on &lt;a href=&apos;https://github.com/jollailija/junatnet&apos;&gt;Junat.net WebView&lt;/a&gt; by jollailija.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This app is a lightweight web wrapper providing fast, streamlined access to romamobile.it right from your device, designed for quick, on-the-go checks of Rome&apos;s public transit news and updates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is an independent, community-made app and is not officially affiliated with romamobile.it, ATAC, or Roma Servizi per la Mobilità.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CoverPage</name>
+    <message>
+        <source>muoviroma</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DockedBar</name>
@@ -59,6 +70,10 @@
     </message>
     <message>
         <source>Open in browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legacy website</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

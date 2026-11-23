@@ -16,27 +16,18 @@ Summary:        Muoversiaroma.it WebView
 Version:        0.6.0
 Release:        1
 Group:          Qt/Qt
-License:        BSD
-Packager:       fravaccaro <fravaccaro@jollacommunity.it>
-URL:            www.jollacommunity.it
+License:        GPLv3
 Source0:        %{name}-%{version}.tar.bz2
 BuildArch:      noarch
 Requires:       sailfishsilica-qt5 >= 0.10.9
 Requires:       libsailfishapp-launcher
-Requires:       qtmozembed-qt5
 Requires:       sailfish-components-webview-qt5
 Requires:       sailfish-components-webview-qt5-popups
-Requires:       sailfish-components-webview-qt5-pickers
 BuildRequires:  desktop-file-utils
-BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Qml)
-BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(qt5embedwidget)
 
 %description
-Muoversiaroma.it WebView. Look for public transportation and plan your trip in Rome!
-
+An unofficial web client for romamobile.it. Easily check schedules, lines, service alerts, and public transit updates for Rome in a fast, lightweight interface.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -69,39 +60,12 @@ desktop-file-install --delete-original       \
    %{buildroot}%{_datadir}/applications/*.desktop
 
 %files
-%defattr(-,root,root,-)
+%defattr(644,root,root,755)
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%{_datadir}/icons/hicolor/108x108/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
 # >> files
 # << files
-
-%changelog
-* Fri Jun 12 2026 0.6.0
-- Migrated from deprecated SilicaWebView/QtWebKit to Sailfish WebView (Gecko).
-- Added Sailjail sandbox profile with Internet and WebView permissions.
-- Added bookmark data migration for upgraded installs.
-
-* Tue Jun 7 2016 0.5.3
-- Fixed webview high-power consumption.
-
-* Sun Jun 5 2016 0.5.2
-- Database fix.
-
-* Thu Jun 2 2016 0.5.1
-- Fixed webview high-power consumption.
-
-* Thu May 3 2016 0.5.0
-- Added navbar.
-
-* Mon Feb 23 2016 0.4.2
-- Fixed bookmarks.
-
-* Wed Feb 17 2016 0.4.1
-- Added Back button.
-
-* Tue Feb 16 2016 0.4.0
-- Switched to webapp view.
-
-* Mon Feb 8 2016 0.3
-- First public release.

@@ -10,19 +10,43 @@
 #   - translation filenames have to be changed
 
 TARGET = harbour-muoviroma
-CONFIG += sailfishapp_qml
+# Thanks, kimmoli! For future reference: https://github.com/kimmoli/test5-app/blob/master/test5.pro
+TEMPLATE = aux
 
+qml.files = qml/*
+
+qml.path = /usr/share/harbour-jollait/qml
+
+desktop.files = harbour-jollait.desktop
+desktop.path = /usr/share/applications
+
+appicons.path = /usr/share/icons/hicolor/
+appicons.files = appicons/*
+
+OTHER_FILES += \
+    qml/harbour-muoviroma.qml \
+    qml/pages/AboutPage.qml \
+    qml/pages/FirstPage.qml \
+    qml/pages/LinksPage.qml \
+    qml/components/BackgroundRectangle.qml \
+    qml/components/BusyState.qml \
+    qml/components/LabelText.qml \
+    qml/components/dockedbar/DockedBar.qml \
+    qml/cover/CoverPage.qml \
+    qml/pages/appinfo.png \
+    rpm/harbour-muoviroma.spec \
+    rpm/harbour-muoviroma.changes \
+    harbour-muoviroma.desktop \
+    harbour-muoviroma.png
+
+# to disable building translations every time, comment out the
+# following CONFIG line
+CONFIG += sailfishapp_i18n link_pkgconfig
+
+# Required to use the Gecko-based Sailfish WebView:
+# https://sailfishos.org/develop/docs/sailfish-components-webview/
 PKGCONFIG += qt5embedwidget
 
-DISTFILES += \
-    qml/harbour-muoviroma.qml \
-    qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    rpm/harbour-muoviroma.spec \
-    translations/*.ts \
-    harbour-muoviroma.desktop
+TRANSLATIONS += translations/*.ts
 
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
-
-CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/harbour-muoviroma-it.ts
+INSTALLS += appicons qml desktop

@@ -44,8 +44,6 @@ WebViewPage {
         NumberAnimation { duration: 220; easing.type: Easing.InOutQuad }
     }
 
-    property bool zoom: false // This is for choosing the pixelratiohack
-
     // Sailfish WebView has no flick()/scrollTo*() helpers: scroll the document instead.
     function scrollBy(amount) {
         webView.runJavaScript("window.scrollBy(0, " + Math.round(amount) + "); return true;")

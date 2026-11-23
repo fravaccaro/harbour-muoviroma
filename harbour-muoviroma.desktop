@@ -9,4 +9,4 @@ Name[it_IT]=muoviroma
 [X-Sailjail]
 OrganizationName=org.frapps.muoviroma
 ApplicationName=harbour-muoviroma
-Permissions=Internet;WebView
+Permissions=Internet;WebView;Location
