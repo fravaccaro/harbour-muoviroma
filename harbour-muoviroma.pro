@@ -15,9 +15,9 @@ TEMPLATE = aux
 
 qml.files = qml/*
 
-qml.path = /usr/share/harbour-jollait/qml
+qml.path = /usr/share/harbour-muoviroma/qml
 
-desktop.files = harbour-jollait.desktop
+desktop.files = harbour-muoviroma.desktop
 desktop.path = /usr/share/applications
 
 appicons.path = /usr/share/icons/hicolor/

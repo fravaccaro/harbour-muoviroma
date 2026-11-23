@@ -71,20 +71,12 @@ Page
                 text: qsTr("This app is a lightweight web wrapper providing fast, streamlined access to romamobile.it right from your device, designed for quick, on-the-go checks of Rome's public transit news and updates.")
             }
 
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Sources")
-                onClicked: Qt.openUrlExternally("https://github.com/lallulli/romamobile")
-            }
 
-            LabelText {
-                text: qsTr("This is an independent, community-made app and is not officially affiliated with romamobile.it, ATAC, or Roma Servizi per la Mobilità.")
-            }
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Sources")
-                onClicked: Qt.openUrlExternally("https://github.com/fravaccaro/harbour-jollait")
+                onClicked: Qt.openUrlExternally("https://github.com/fravaccaro/harbour-muoviroma")
             }
 
             LabelText {
@@ -112,6 +104,16 @@ Page
 
               SectionHeader { text: qsTr("Credits") }
 
+            LabelText {
+                text: qsTr("This is an independent, community-made app and is not officially affiliated with romamobile.it, ATAC, or Roma Servizi per la Mobilità.")
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Sources")
+                onClicked: Qt.openUrlExternally("https://github.com/lallulli/romamobile")
+            }
+            
               LabelText {
                   text: qsTr("Based on <a href='https://github.com/jollailija/junatnet'>Junat.net WebView</a> by jollailija.")
                }

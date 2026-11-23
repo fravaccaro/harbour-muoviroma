@@ -39,6 +39,7 @@ qrc_*.cpp
 ui_*.h
 *.qmlc
 *.jsc
+*.qm
 Makefile*
 *build-*
 
