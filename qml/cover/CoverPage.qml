@@ -37,17 +37,19 @@ CoverBackground {
         width: parent.width
         spacing: Theme.paddingMedium
 
-    Image {
-        anchors.horizontalCenter: parent.horizontalCenter
-        source: "/usr/share/icons/hicolor/86x86/apps/harbour-muoviroma.png"
-    }
-    Label {
-        id: label
-        color: Theme.highlightColor
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("muoviroma")
+        Image {
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "/usr/share/icons/hicolor/86x86/apps/harbour-muoviroma.png"
+        }
+
+        Label {
+            id: label
+
+            color: Theme.highlightColor
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "muoviroma"
+        }
 
     }
-  }
+
 }
-

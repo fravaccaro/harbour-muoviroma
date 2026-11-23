@@ -27,86 +27,75 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import "../components"
+import "../components/dockedbar"
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import Sailfish.WebView 1.0
-import "../components"
-import "../components/dockedbar"
 
 WebViewPage {
     id: page
-    focus: true
 
     property alias webView: webViewContainer.webView
     property real webViewBottomMargin: webView.chrome ? dockedbar.height : 0
 
-    Behavior on webViewBottomMargin {
-        NumberAnimation { duration: 220; easing.type: Easing.InOutQuad }
-    }
-
     // Sailfish WebView has no flick()/scrollTo*() helpers: scroll the document instead.
     function scrollBy(amount) {
-        webView.runJavaScript("window.scrollBy(0, " + Math.round(amount) + "); return true;")
+        webView.runJavaScript("window.scrollBy(0, " + Math.round(amount) + "); return true;");
     }
 
     function scrollToTop() {
-        webView.runJavaScript("window.scrollTo(0, 0); return true;")
+        webView.runJavaScript("window.scrollTo(0, 0); return true;");
     }
 
     function scrollToBottom() {
-        webView.runJavaScript("window.scrollTo(0, Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)); return true;")
+        webView.runJavaScript("window.scrollTo(0, Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)); return true;");
     }
 
+    function handleKeyPressed(event) {
+        if (event.key === Qt.Key_Down) {
+            scrollBy(-page.height);
+            event.accepted = true;
+        }
+        if (event.key === Qt.Key_Up) {
+            scrollBy(page.height);
+            event.accepted = true;
+        }
+        if (event.key === Qt.Key_PageDown) {
+            scrollToBottom();
+            event.accepted = true;
+        }
+        if (event.key === Qt.Key_PageUp) {
+            scrollToTop();
+            event.accepted = true;
+        }
+        if (event.key === Qt.Key_B) {
+            webView.goBack();
+            event.accepted = true;
+        }
+        if (event.key === Qt.Key_F) {
+            webView.goForward();
+            event.accepted = true;
+        }
+        if (event.key === Qt.Key_H) {
+            webView.url = "https://romamobile.it/webapp";
+            event.accepted = true;
+        }
+        if (event.key === Qt.Key_R) {
+            webView.reload();
+            event.accepted = true;
+        }
+    }
+
+    focus: true
     Keys.onPressed: {
-           handleKeyPressed(event);
-       }
-
-       function handleKeyPressed(event) {
-
-           if (event.key === Qt.Key_Down) {
-               scrollBy(-page.height);
-               event.accepted = true;
-           }
-
-           if (event.key === Qt.Key_Up) {
-               scrollBy(page.height);
-               event.accepted = true;
-           }
-
-           if (event.key === Qt.Key_PageDown) {
-               scrollToBottom();
-               event.accepted = true;
-           }
-
-           if (event.key === Qt.Key_PageUp) {
-               scrollToTop();
-               event.accepted = true;
-           }
-
-           if (event.key === Qt.Key_B) {
-               webView.goBack();
-               event.accepted = true;
-           }
-
-           if (event.key === Qt.Key_F) {
-               webView.goForward();
-               event.accepted = true;
-           }
-
-           if (event.key === Qt.Key_H) {
-               webView.url = "https://www.jollacommunity.it";
-               event.accepted = true;
-           }
-
-           if (event.key === Qt.Key_R) {
-               webView.reload();
-               event.accepted = true;
-           }
-   }
+        handleKeyPressed(event);
+    }
 
     // WebViewFlickable provides the Silica flickable required by PullDownMenu.
     WebViewFlickable {
         id: webViewContainer
+
         anchors.fill: parent
         anchors.bottomMargin: webViewBottomMargin
 
@@ -137,41 +126,70 @@ WebViewPage {
                 text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("./AboutPage.qml"))
             }
+
             MenuItem {
                 text: qsTr("Legacy website")
                 onClicked: {
-                    webView.url = "https://romamobile.it/"
+                    webView.url = "https://romamobile.it/";
                 }
             }
+
             MenuItem {
                 text: qsTr("Open in browser")
                 onClicked: Qt.openUrlExternally(webView.url)
             }
+
             MenuItem {
                 text: qsTr("Refresh")
                 onClicked: webView.reload()
             }
+
         }
+
     }
 
-    DockedBar
-    {
+    DockedBar {
         id: dockedbar
-        anchors { left: parent.left; bottom: parent.bottom; right: parent.right }
 
         property bool shown: webView.chrome
         property real slideOffset: shown ? 0 : height
 
         opacity: shown ? 1 : 0
         visible: opacity > 0
-        transform: Translate { y: dockedbar.slideOffset }
+
+        anchors {
+            left: parent.left
+            bottom: parent.bottom
+            right: parent.right
+        }
+
+        transform: Translate {
+            y: dockedbar.slideOffset
+        }
 
         Behavior on slideOffset {
-            NumberAnimation { duration: 220; easing.type: Easing.InOutQuad }
+            NumberAnimation {
+                duration: 220
+                easing.type: Easing.InOutQuad
+            }
+
         }
 
         Behavior on opacity {
-            FadeAnimation { duration: 220 }
+            FadeAnimation {
+                duration: 220
+            }
+
         }
+
     }
+
+    Behavior on webViewBottomMargin {
+        NumberAnimation {
+            duration: 220
+            easing.type: Easing.InOutQuad
+        }
+
+    }
+
 }
